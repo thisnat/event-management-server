@@ -4,7 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const Database = require('./config/Database');
 
-const routes = require('./routers')
+const routes = require('./routers');
 
 mongoose.connect(Database.url,{useNewUrlParser: true,useUnifiedTopology: true,useFindAndModify: false,useCreateIndex: true}).then(() =>{
     console.log('database connected');
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
     res.send("hello");
 });
 
