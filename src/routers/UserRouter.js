@@ -14,4 +14,14 @@ router.route('/').get((req, res, next) => {
     });
 });
 
+router.route('/register').post((req, res, next) => {
+    userSchema.create(req.body, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
+        }
+    })
+})
+
 module.exports = router;
