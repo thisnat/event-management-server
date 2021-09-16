@@ -29,6 +29,9 @@ let userSchema = new Schema({
         type: String,
         default: "active"
     },
+    pic: {
+        type: String,
+    },
     create_at: {
         type: Date,
         default: Date.now()
@@ -39,6 +42,11 @@ let userSchema = new Schema({
     },
 }, {
     collection: "users"
+});
+
+userSchema.pre('save', function (next) {
+    this.pic = `https://avatars.dicebear.com/api/micah/${this.get('username')}.svg?background=%23ede1be`; 
+    next();
 });
 
 module.exports = mongoose.model('user', userSchema);
