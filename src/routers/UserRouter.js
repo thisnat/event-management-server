@@ -33,7 +33,7 @@ router.route('/login').post((req, res, next) => {
         if (error) {
             return next(error);
         } else {
-            if (data.length === 0) {
+            if (data === null) {
                 res.status(404).json({ msg: "user not found" });
             } else {
                 bcrypt.compare(password, data.password).then(isMatch => {
@@ -54,6 +54,7 @@ router.route('/login').post((req, res, next) => {
                             name : data.name,
                             lastName : data.lastName,
                             email : data.email,
+                            pic : data.pic,
                             token : token
                         }
 
