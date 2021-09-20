@@ -40,32 +40,6 @@ router.get('/me', auth, (req, res, next) => {
     });
 });
 
-//not use
-router.get('/id/:id', auth, (req, res, next) => {
-    if (req.jwt.username === req.params.id) {
-        userSchema.findOne({ 'username': req.params.id }, (error, data) => {
-            if (error) {
-                return next(error);
-            } else {
-                let clientData = {
-                    create_at: data.create_at,
-                    update_at: data.update_at,
-                    _id: data._id,
-                    isOrg: data.isOrg,
-                    name: data.name,
-                    lastName: data.lastName,
-                    username: data.username,
-                    email: data.email,
-                    pic: data.pic,
-                }
-                res.json(clientData);
-            }
-        });
-    } else {
-        res.status(401).json({ msg: "Unauthorized" });
-    }
-});
-
 router.route('/login').post((req, res, next) => {
     let { username, password } = req.body;
 
@@ -112,21 +86,35 @@ router.route('/login').post((req, res, next) => {
 
 });
 
-router.route('/register').post(async (req, res, next) => {
-    try {
-        const hashedPassword = await bcrypt.hash(req.body.password, 10);
-        req.body.password = hashedPassword;
-    } catch {
-        return res.status(500).send();
-    }
+router.route('/register').post((req, res, next) => {
 
-    userSchema.create(req.body, (error, data) => {
+    userSchema.findOne({ 'username': req.body.username }, async (error, data) => {
         if (error) {
             return next(error);
         } else {
-            res.json(data);
+
+            //check username is taken
+            if (data === null) {
+                try {
+                    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+                    req.body.password = hashedPassword;
+                } catch {
+                    return res.status(500).send();
+                }
+
+                userSchema.create(req.body, (error, data) => {
+                    if (error) {
+                        return next(error);
+                    } else {
+                        res.json(data);
+                    }
+                })
+            } else {
+                res.status(400).json({ msg : "invalid username" });
+            }
         }
-    })
+
+    });
 })
 
 module.exports = router;
