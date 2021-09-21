@@ -34,6 +34,7 @@ router.get('/me', auth, (req, res, next) => {
                 username: data.username,
                 email: data.email,
                 pic: data.pic,
+                about: data.about
             }
             res.json(clientData);
         }
@@ -69,6 +70,7 @@ router.route('/login').post((req, res, next) => {
                             lastName: data.lastName,
                             email: data.email,
                             pic: data.pic,
+                            about: data.about,
                             token: token
                         }
 

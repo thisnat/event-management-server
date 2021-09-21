@@ -32,6 +32,10 @@ let userSchema = new Schema({
     pic: {
         type: String,
     },
+    about: {
+        type: String,
+        default: "Hello"
+    },
     create_at: {
         type: Date,
         default: Date.now()
