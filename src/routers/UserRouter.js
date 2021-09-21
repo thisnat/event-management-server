@@ -134,6 +134,28 @@ router.route('/register').post((req, res, next) => {
         }
 
     });
-})
+});
+
+router.patch('/password', auth, (req, res, next) => {
+    userSchema.findOne({ 'username' : req.jwt.username }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            bcrypt.compare(req.body.oldPassword, data.password).then( async (isMatch) => {
+                if(isMatch){
+                    try {
+                        const hashedPassword = await bcrypt.hash(req.body.newPassword, 10);
+                        await userSchema.findByIdAndUpdate(data._id, {password : hashedPassword});  
+                    } catch {
+                        return res.status(500).json({msg : "error"});
+                    }
+                    res.status(200).json({msg : "done"});
+                } else {
+                    res.status(401).json({ msg: "unauthorized" });
+                }
+            })
+        }
+    })
+});
 
 module.exports = router;
