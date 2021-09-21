@@ -145,7 +145,7 @@ router.patch('/password', auth, (req, res, next) => {
                 if(isMatch){
                     try {
                         const hashedPassword = await bcrypt.hash(req.body.newPassword, 10);
-                        await userSchema.findByIdAndUpdate(data._id, {password : hashedPassword});  
+                        await userSchema.findByIdAndUpdate(data._id, {password : hashedPassword, update_at : Date.now()});  
                     } catch {
                         return res.status(500).json({msg : "error"});
                     }
