@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 
 const auth = require('../middleware/auth');
 
+//not use
 router.route('/').get((req, res, next) => {
     userSchema.find((error, data) => {
         if (error) {
@@ -37,6 +38,22 @@ router.get('/me', auth, (req, res, next) => {
                 about: data.about
             }
             res.json(clientData);
+        }
+    });
+});
+
+router.patch('/me', auth, (req, res, next) => {
+    userSchema.findOneAndUpdate({ 'username': req.jwt.username }, {
+        email: req.body.email,
+        name: req.body.name,
+        lastName: req.body.lastName,
+        about: req.body.about,
+        update_at: Date.now()
+    }, (error) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.status(200).json({msg : "update done"});
         }
     });
 });
@@ -112,7 +129,7 @@ router.route('/register').post((req, res, next) => {
                     }
                 })
             } else {
-                res.status(400).json({ msg : "invalid username" });
+                res.status(400).json({ msg: "invalid username" });
             }
         }
 
