@@ -5,4 +5,10 @@ to start
 yarn start
 ```
 
+to dev
+
+```bash
+yarn dev
+```
+
 > server run at port 2626 
