@@ -43,7 +43,7 @@ let userSchema = new Schema({
     update_at: {
         type: Date,
         default: Date.now()
-    },
+    }
 }, {
     collection: "users"
 });

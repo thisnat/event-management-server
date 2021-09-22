@@ -1,7 +1,8 @@
 const UserRouter = require('./UserRouter');
+const EventRouter = require('./EventRouter');
 
 const routes = {
-    UserRouter
+    UserRouter, EventRouter
 };
 
 module.exports = routes;
