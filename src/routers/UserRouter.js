@@ -19,6 +19,10 @@ router.route('/').get((req, res, next) => {
     });
 });
 
+router.get('/token', auth, (req, res) => {
+    res.status(200).send(req.jwt);
+})
+
 router.get('/me', auth, (req, res, next) => {
     userSchema.findOne({ 'username': req.jwt.username }, (error, data) => {
         if (error) {

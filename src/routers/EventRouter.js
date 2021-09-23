@@ -5,9 +5,6 @@ const eventSchema = require('../models/Event');
 
 const userSchema = require('../models/User');
 
-//const bcrypt = require('bcrypt');
-//const jwt = require('jsonwebtoken');
-
 const auth = require('../middleware/auth');
 
 router.get('/', (req, res, next) => {

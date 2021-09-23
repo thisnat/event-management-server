@@ -34,7 +34,7 @@ let userSchema = new Schema({
     },
     about: {
         type: String,
-        default: "Hello"
+        default: "Hello world"
     },
     create_at: {
         type: Date,
