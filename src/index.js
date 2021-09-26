@@ -27,5 +27,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/user', routes.UserRouter);
 app.use('/api/event', routes.EventRouter);
+app.use('/api/join', routes.JoinRouter);
 
 app.listen(PORT, () => console.log(`Server is running at port ${PORT}`));

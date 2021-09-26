@@ -26,6 +26,10 @@ let eventSchema = new Schema({
     about:{
         type: String
     },
+    join: {
+        type: Number,
+        default: 0
+    },
     create_at: {
         type: Date,
         default: Date.now()
