@@ -14,6 +14,9 @@ let joinSchema = new Schema({
     username: {
         type: String
     },
+    email: {
+        type: String
+    },
     joinDate: {
         type: Date,
         default: Date.now()

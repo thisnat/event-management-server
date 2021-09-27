@@ -80,7 +80,8 @@ router.route('/login').post((req, res, next) => {
                             username: data.username,
                             isOrg: data.isOrg,
                             status: data.status,
-                            role: data.role
+                            role: data.role,
+                            email: data.email
                         }
                         const token = jwt.sign(userData, process.env.JWT_SECRET);
 

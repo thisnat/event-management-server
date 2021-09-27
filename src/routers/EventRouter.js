@@ -49,4 +49,14 @@ router.post('/create', auth, (req, res, next) => {
     })
 });
 
+router.get('/host/', auth, (req, res, next) => {
+    eventSchema.find({ host: req.jwt.username }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
+        }
+    })
+});
+
 module.exports = router;

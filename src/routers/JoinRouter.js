@@ -11,7 +11,8 @@ router.post('/:id', auth, (req, res, next) => {
         eventId: req.params.id,
         eventName: req.body.eventName,
         userId: req.jwt.userId,
-        username: req.jwt.username
+        username: req.jwt.username,
+        email : req.body.email
     }
 
     joinSchema.create(joinData, async (error, data) => {
