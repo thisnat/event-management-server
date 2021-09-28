@@ -12,9 +12,11 @@ router.post('/:id', auth, (req, res, next) => {
         eventName: req.body.eventName,
         userId: req.jwt.userId,
         username: req.jwt.username,
-        email : req.body.email
+        email : req.jwt.email,
+        name : req.jwt.name,
+        lastName : req.jwt.lastName
     }
-
+    
     joinSchema.create(joinData, async (error, data) => {
         if (error) {
             return next(error);
@@ -44,5 +46,15 @@ router.get('/isJoin/:id', auth, (req, res, next) => {
         }
     })
 });
+
+router.get('/event/:id', (req, res, next) => {
+    joinSchema.find({ eventId: req.params.id }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
+        }
+    }) 
+})
 
 module.exports = router;

@@ -57,7 +57,7 @@ router.patch('/me', auth, (req, res, next) => {
         if (error) {
             return next(error);
         } else {
-            res.status(200).json({msg : "update done"});
+            res.status(200).json({ msg: "update done" });
         }
     });
 });
@@ -81,7 +81,9 @@ router.route('/login').post((req, res, next) => {
                             isOrg: data.isOrg,
                             status: data.status,
                             role: data.role,
-                            email: data.email
+                            email: data.email,
+                            name: data.name,
+                            lastName: data.lastName
                         }
                         const token = jwt.sign(userData, process.env.JWT_SECRET);
 
@@ -142,19 +144,19 @@ router.route('/register').post((req, res, next) => {
 });
 
 router.patch('/password', auth, (req, res, next) => {
-    userSchema.findOne({ 'username' : req.jwt.username }, (error, data) => {
+    userSchema.findOne({ 'username': req.jwt.username }, (error, data) => {
         if (error) {
             return next(error);
         } else {
-            bcrypt.compare(req.body.oldPassword, data.password).then( async (isMatch) => {
-                if(isMatch){
+            bcrypt.compare(req.body.oldPassword, data.password).then(async (isMatch) => {
+                if (isMatch) {
                     try {
                         const hashedPassword = await bcrypt.hash(req.body.newPassword, 10);
-                        await userSchema.findByIdAndUpdate(data._id, {password : hashedPassword, update_at : Date.now()});  
+                        await userSchema.findByIdAndUpdate(data._id, { password: hashedPassword, update_at: Date.now() });
                     } catch {
-                        return res.status(500).json({msg : "error"});
+                        return res.status(500).json({ msg: "error" });
                     }
-                    res.status(200).json({msg : "done"});
+                    res.status(200).json({ msg: "done" });
                 } else {
                     res.status(401).json({ msg: "unauthorized" });
                 }
