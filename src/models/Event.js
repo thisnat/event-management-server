@@ -2,33 +2,48 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let eventSchema = new Schema({
-    name:{
+    name: {
         type: String
     },
-    host:{
+    host: {
         type: String
     },
-    color:{
+    color: {
         type: String
     },
-    emoji:{
+    emoji: {
         type: String
     },
-    date:{
+    date: {
         type: String
     },
-    time:{
+    time: {
         type: String
     },
-    location:{
+    location: {
         type: String
     },
-    about:{
+    about: {
         type: String
     },
     join: {
         type: Number,
         default: 0
+    },
+    canReserve: {
+        type: Boolean,
+        default: false
+    },
+    reserve: {
+        type: Number,
+        default: 0
+    },
+    maxReserve: {
+        type: Number
+    },
+    active : {
+        type : String,
+        default : true
     },
     create_at: {
         type: Date,
