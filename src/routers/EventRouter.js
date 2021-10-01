@@ -20,21 +20,21 @@ router.get('/', (req, res, next) => {
 router.get('/id/:id', (req, res) => {
     eventSchema.findById(req.params.id, async (error, data) => {
         if (error) {
-            return res.status(500).json({msg : "not found"});
+            return res.status(500).json({ msg: "not found" });
         } else {
 
             const host = await userSchema.findOne({ 'username': data.host });
 
             const hostClean = {
-                name : host.name,
-                lastName : host.lastName,
-                username : host.username,
-                about : host.about,
-                pic : host.pic,
-                isOrg : host.isOrg
+                name: host.name,
+                lastName: host.lastName,
+                username: host.username,
+                about: host.about,
+                pic: host.pic,
+                isOrg: host.isOrg
             }
 
-            res.json(Object.assign({}, data._doc, { hostData : hostClean }));
+            res.json(Object.assign({}, data._doc, { hostData: hostClean }));
         }
     })
 });
@@ -58,5 +58,15 @@ router.get('/host/', auth, (req, res, next) => {
         }
     })
 });
+
+router.patch('/reserveDone/:id', auth, (req, res, next) => {
+    eventSchema.findByIdAndUpdate(req.params.id, { canReserve: true }, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
+        }
+    })
+})
 
 module.exports = router;

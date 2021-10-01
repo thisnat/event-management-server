@@ -29,5 +29,6 @@ app.use('/api/user', routes.UserRouter);
 app.use('/api/event', routes.EventRouter);
 app.use('/api/join', routes.JoinRouter);
 app.use('/api/reserve', routes.ReserveRouter);
+app.use('/api/zone', routes.ZoneRouter);
 
 app.listen(PORT, () => console.log(`Server is running at port ${PORT}`));

@@ -17,6 +17,10 @@ let reserveSchema = new Schema({
     pic: {
         type: String
     },
+    isZoneSet: {
+        type: Boolean,
+        default: false
+    },
     create_at: {
         type: Date,
         default: Date.now()
