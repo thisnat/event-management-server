@@ -22,8 +22,10 @@ router.post('/create', auth, (req, res, next) => {
             return next(error);
         } else {
             let zone = {
+                eventName : req.body.eventName,
                 eventId : data.eventId,
-                price : req.body.price
+                price : req.body.price,
+                reserveId : data.id
             }
             await EventSchema.findByIdAndUpdate(data.eventId, {maxReserve : req.body.maxReserve});
             await ZoneSchema.create(createZoneArray(req.body.maxReserve, zone));

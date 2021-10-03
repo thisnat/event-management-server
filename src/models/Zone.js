@@ -5,6 +5,12 @@ let zoneSchema = new Schema({
     eventId: {
         type: String
     },
+    eventName: {
+        type: String
+    },
+    reserveId: {
+        type: String
+    },
     name: {
         type: String
     },
