@@ -1,4 +1,5 @@
 # Event Management Server
+
 to start
 
 ```bash
@@ -10,5 +11,8 @@ to dev
 ```bash
 yarn dev
 ```
-
 > server run at port 2626 
+
+## requirement
+- NodeJS
+- MongoDB
