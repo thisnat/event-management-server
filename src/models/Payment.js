@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+//status 
+//0 = ยังไม่จ่าย 1 = กำลังดำเนินการ  2 = สำเร็จ 3 = ยกเลิก
+
 let paymentSchema = new Schema({
     zoneId : {
         type : String
@@ -22,6 +25,10 @@ let paymentSchema = new Schema({
     },
     username : {
         type : String
+    },
+    pic : {
+        type : String,
+        default : ""
     },
     status : {
         type : Number,

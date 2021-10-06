@@ -44,4 +44,14 @@ router.get('/event/:id', (req, res, next) => {
     })
 })
 
+router.get('/:id', auth, (req, res, next) => {
+    ReserveSchema.findById(req.params.id, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+            res.json(data);
+        }
+    })
+})
+
 module.exports = router;
