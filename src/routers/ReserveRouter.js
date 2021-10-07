@@ -16,6 +16,7 @@ function createZoneArray (max, zone) {
     return array
 }
 
+//legacy
 router.post('/create', auth, (req, res, next) => {
     ReserveSchema.create(Object.assign({}, req.body , {host : req.jwt.username}), async (error, data) => {
         if (error) {
