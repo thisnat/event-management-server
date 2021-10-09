@@ -1,11 +1,9 @@
 const express = require('express');
-
 const router = express.Router();
 const eventSchema = require('../models/Event');
-
 const userSchema = require('../models/User');
-
 const auth = require('../middleware/auth');
+const _ = require('lodash');
 
 router.get('/', (req, res, next) => {
     eventSchema.find((error, data) => {
@@ -67,6 +65,30 @@ router.patch('/reserveDone/:id', auth, (req, res, next) => {
             res.json(data);
         }
     })
-})
+});
+
+router.get('/eventoftheday', (req, res, next) => {
+    eventSchema.find({ $where: "this.reserve != this.maxReserve" }, async (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
+
+            if(data.length !== 0){
+                let pickEvent = _.maxBy(data, (pick) => {
+                    return pick.reserve
+                })
+                
+                let {pic} = await userSchema.findOne({username : pickEvent.host});
+                
+                let pack = {
+                    ...pickEvent._doc, pic
+                }
+                res.status(200).json(pack);
+            } else {
+                res.json({});
+            }
+        }
+    })
+});
 
 module.exports = router;
