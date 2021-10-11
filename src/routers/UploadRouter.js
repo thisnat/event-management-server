@@ -8,6 +8,7 @@ const PaymentSchema = require('../models/Payment');
 const ReserveSchema = require('../models/Reserve');
 const EventSchema = require('../models/Event');
 const ZoneSchema = require('../models/Zone');
+const userSchema = require('../models/User');
 
 let storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -66,6 +67,16 @@ router.post('/reserve', [auth, upload.single('content')], (req, res, next) => {
             }
             await EventSchema.findByIdAndUpdate(data.eventId, {maxReserve : requestData.maxReserve});
             await ZoneSchema.create(createZoneArray(requestData.maxReserve, zone));
+            res.json(data);
+        }
+    })
+});
+
+router.post('/profile', [auth, upload.single('content')], (req, res, next) => {
+    userSchema.findOneAndUpdate({username : req.jwt.username}, {pic : `${req.body.data}${req.file.filename}`, update_at : Date.now()}, (error, data) => {
+        if (error) {
+            return next(error);
+        } else {
             res.json(data);
         }
     })

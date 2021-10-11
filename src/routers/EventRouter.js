@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
         } else {
             res.json(data);
         }
-    });
+    }).sort({ _id: -1 });
 });
 
 router.get('/id/:id', (req, res) => {
